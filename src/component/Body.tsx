@@ -3,8 +3,7 @@ import { useState } from "react";
 import resList from "../data/resList";
 
 const Body = (): React.ReactElement => {
-
-  let [reactVariable, setReactVariable] = useState(resList)
+  const [reactVariable, setReactVariable] = useState(resList);
 
   return (
     <div className="body">
@@ -13,12 +12,11 @@ const Body = (): React.ReactElement => {
           className="filter-btn"
           onClick={() => {
             // filter login
-            const filteredData = reactVariable.filter((res)=>{
-              return res?.info?.avgRating >= 4.5
+            const filteredData = reactVariable.filter((res) => {
+              return res?.info?.avgRating >= 4.5;
             });
-            
+
             setReactVariable(filteredData);
-            
           }}
         >
           Top Rated Restaurants
