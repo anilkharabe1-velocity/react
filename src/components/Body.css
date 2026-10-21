@@ -1,0 +1,12 @@
+.res-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.search-container {
+  margin: 10px;
+}
+
+.top-res-button {
+  margin: 10px;
+}
