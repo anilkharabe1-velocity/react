@@ -1,6 +1,7 @@
 import RestaurantCard from "./RestaurantCard";
 import "./Body.css";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 // import resArray from "../utils/resData";
 import axios from "axios";
 import Shimmer from "./Shimmer";
@@ -81,7 +82,11 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredRestaurant.map((resObj) => {
-          return <RestaurantCard key={resObj.info.id} data={resObj} />;
+          return (
+            <Link to={"/res-menu/" + resObj.info.id}>
+              <RestaurantCard key={resObj.info.id} data={resObj} />
+            </Link>
+          );
         })}
       </div>
     </div>
