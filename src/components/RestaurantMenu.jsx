@@ -1,34 +1,39 @@
-import axios from "axios";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+// import { useParams } from "react-router-dom";
+import resMenu from "../utils/resMenu";
+import "./RestaurantMenu.css";
+import MenuCategory from "./MenuCategory";
 
 const RestaurantMenu = () => {
-  //   const [resInfo, setResInfo] = useState(null);
+  const [resInfo] = useState(resMenu);
 
-  const { resId } = useParams();
-  console.log("resId", resId);
+  const { name, avgRating, costForTwoMessage, areaName } =
+    resInfo.data.cards[2].card.card.info;
 
-  const fetchMenu = async () => {
-    const data = await axios.get(
-      `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=18.52110&lng=73.85020&restaurantId=${resId}&catalog_qa=undefined&submitAction=ENTER`,
-    );
-    console.log("data", data);
-  };
-
-  useEffect(() => {
-    fetchMenu();
-  }, []);
+  const { cards: categories } =
+    resInfo.data.cards[3].groupedCard.cardGroupMap.REGULAR;
 
   return (
     <>
-      <h1>Velocity Restaurant</h1>
-      <h2>4.5 Stars</h2>
-      <h3>₹200 for two</h3>
+      <div className="resInfo">
+        <h1>{name}</h1>
+        <h4>{avgRating} Stars</h4>
+        <h4>{costForTwoMessage} </h4>
+        <h4>Outlet: {areaName}</h4>
+      </div>
 
+      <h3>Menu</h3>
       <ul>
-        <li>Biryani</li>
-        <li>Burger</li>
-        <li>Pohe</li>
+        {categories
+          .filter((item) => {
+            return (
+              item.card.card["@type"] ===
+              "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+            );
+          })
+          .map((item) => {
+            return <MenuCategory data={item} />;
+          })}
       </ul>
     </>
   );
