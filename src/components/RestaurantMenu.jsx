@@ -13,6 +13,13 @@ const RestaurantMenu = () => {
   const { cards: categories } =
     resInfo.data.cards[3].groupedCard.cardGroupMap.REGULAR;
 
+  const foodCategory = categories.filter((item) => {
+    return (
+      item.card.card["@type"] ===
+      "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
+  });
+
   return (
     <>
       <div className="resInfo">
@@ -22,18 +29,10 @@ const RestaurantMenu = () => {
         <h4>Outlet: {areaName}</h4>
       </div>
 
-      <h3>Menu</h3>
       <ul>
-        {categories
-          .filter((item) => {
-            return (
-              item.card.card["@type"] ===
-              "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-            );
-          })
-          .map((item) => {
-            return <MenuCategory data={item} />;
-          })}
+        {foodCategory.map((item) => {
+          return <MenuCategory data={item} />;
+        })}
       </ul>
     </>
   );
