@@ -5,12 +5,16 @@ import About from "./components/About";
 import Error from "./components/Error";
 import Cart from "./components/Cart";
 import RestaurantMenu from "./components/RestaurantMenu";
+import { Provider } from "react-redux";
+import appStore from "./redux/appStore";
 
 const App = () => {
   return (
     <>
-      <Header />
-      <Outlet />
+      <Provider store={appStore}>
+        <Header />
+        <Outlet />
+      </Provider>
     </>
   );
 };

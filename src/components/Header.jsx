@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const cart = useSelector((store) => store.cart.items);
+
   return (
     <div className="Header">
       <div className="logo-div">
@@ -22,7 +25,7 @@ const Header = () => {
             <Link to="/about">About</Link>
           </li>
           <li>
-            <Link to="/cart">Cart(5)</Link>{" "}
+            <Link to="/cart">Cart({cart.length})</Link>{" "}
           </li>
         </ul>
       </div>
