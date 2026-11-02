@@ -6,6 +6,7 @@ const ItemList = ({ itemList }) => {
   const dispatch = useDispatch();
 
   const handleAdd = (item) => {
+    console.log("button clicked");
     dispatch(addItem(item));
   };
 
@@ -23,14 +24,17 @@ const ItemList = ({ itemList }) => {
               </h5>
               <p>{item?.card?.info?.description}</p>
             </div>
-            <div className="item-img">
-              <button className="add-btn" onClick={() => handleAdd(item)}>
+            <div className="w-50">
+              <button
+                className="absolute bg-amber-200 cursor-pointer rounded-2xl px-2"
+                onClick={() => handleAdd(item)}
+              >
                 {/* <button className="add-btn" onClick={handleAdd(item)}> completly wrong */}
                 {/* <button className="add-btn" onClick={ handleAdd}> */}
                 Add+
               </button>
               <img
-                className="res-img"
+                className="w-[100]%"
                 src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${item?.card?.info?.imageId}`}
               ></img>
             </div>

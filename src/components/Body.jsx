@@ -1,5 +1,4 @@
 import RestaurantCard from "./RestaurantCard";
-import "./Body.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import resArray from "../utils/resData";
@@ -43,8 +42,9 @@ const Body = () => {
     <Shimmer />
   ) : (
     <div>
-      <div className="search-container">
+      <div>
         <input
+          className="border-1 rounded-sm"
           type="text"
           placeholder="Search Restaurant"
           value={searchText}
@@ -53,7 +53,7 @@ const Body = () => {
           }}
         ></input>
         <button
-          className="search-btn"
+          className="border-1 ml-2.5 px-1.5 rounded-sm bg-amber-100"
           onClick={() => {
             // filter. the resturants card and update the UI
             const filterData = listOfRestaurant.filter((res) => {
@@ -69,7 +69,7 @@ const Body = () => {
         </button>
 
         <button
-          className="top-res-button"
+          className="border-1 ml-2.5 px-1.5 rounded-sm bg-amber-100"
           onClick={() => {
             const filteredData = listOfRestaurant.filter((res) => {
               return res.info.avgRating >= 4.5;
@@ -80,7 +80,7 @@ const Body = () => {
           Top Rated Restaurant
         </button>
       </div>
-      <div className="res-container">
+      <div className="flex flex-wrap">
         {filteredRestaurant.map((resObj) => {
           return (
             <Link to={"/res-menu/" + resObj.info.id}>
