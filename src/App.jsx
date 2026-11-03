@@ -7,14 +7,18 @@ import Cart from "./components/Cart";
 import RestaurantMenu from "./components/RestaurantMenu";
 import { Provider } from "react-redux";
 import appStore from "./redux/appStore";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <>
-      <Provider store={appStore}>
-        <Header />
-        <Outlet />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={appStore}>
+          <Header />
+          <Outlet />
+        </Provider>
+      </QueryClientProvider>
     </>
   );
 };
