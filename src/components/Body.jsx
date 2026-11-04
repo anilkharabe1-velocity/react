@@ -1,7 +1,6 @@
 import RestaurantCard from "./RestaurantCard";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import resArray from "../utils/resData";
 import Shimmer from "./Shimmer";
 import useResList from "../customHooks/useResList";
 
@@ -16,8 +15,13 @@ const Body = () => {
     listOfRestaurant,
     filteredRestaurant,
     isLoading,
+    isError,
     setFilteredRestaurant,
   } = useResList();
+
+  if (isError) {
+    return <Error />;
+  }
 
   return isLoading ? (
     <Shimmer />
