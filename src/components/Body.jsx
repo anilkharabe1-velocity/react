@@ -3,6 +3,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Shimmer from "./Shimmer";
 import useResList from "../customHooks/useResList";
+import withOfferRestaurantCard from "./withOfferRestaurantCard";
+
+const OfferComponent = withOfferRestaurantCard(RestaurantCard);
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
@@ -68,7 +71,11 @@ const Body = () => {
         {filteredRestaurant.map((resObj) => {
           return (
             <Link to={"/res-menu/" + resObj.info.id}>
-              <RestaurantCard key={resObj.info.id} data={resObj} />
+              {resObj.info.avgRating < 4.5 ? (
+                <RestaurantCard key={resObj.info.id} data={resObj} />
+              ) : (
+                <OfferComponent key={resObj.info.id} data={resObj} />
+              )}
             </Link>
           );
         })}
