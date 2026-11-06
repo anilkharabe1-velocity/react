@@ -8,6 +8,8 @@ import RestaurantMenu from "./components/RestaurantMenu";
 import { Provider } from "react-redux";
 import appStore from "./redux/appStore";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import Login from "./components/Login";
+import PrivateRoute from "./components/PrivateRoute";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -38,7 +40,15 @@ const AppRouter = createBrowserRouter([
       },
       {
         path: "/cart",
-        element: <Cart />,
+        element: (
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/res-menu/:resId",

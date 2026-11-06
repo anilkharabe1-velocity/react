@@ -18,7 +18,12 @@ const Cart = () => {
       <div>
         <ItemList itemList={cart} />
       </div>
-      <button onClick={clearCartFun}>Clear Cart</button>
+      <button
+        onClick={clearCartFun}
+        className="border-1 ml-2.5 px-1.5 rounded-sm bg-amber-100"
+      >
+        Clear Cart
+      </button>
     </>
   );
 };

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const cart = useSelector((store) => store.cart.items);
+  const user = useSelector((store) => store.user.isLogin);
 
   return (
     <div className="flex justify-between bg-gray-100">
@@ -24,8 +25,18 @@ const Header = () => {
             <Link to="/about">About</Link>
           </li>
           <li className="p-2.5 m-2.5">
-            <Link to="/cart">Cart({cart.length})</Link>{" "}
+            <Link to="/cart">Cart({cart.length})</Link>
           </li>
+          {user ? (
+            <li className="p-2.5 m-2.5">
+              <Link to="/login">Logout</Link>
+            </li>
+          ) : (
+            <li className="p-2.5 m-2.5">
+              <Link to="/login">Login</Link>
+            </li>
+          )}
+          :
         </ul>
       </div>
     </div>
