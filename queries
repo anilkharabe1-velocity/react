@@ -1,0 +1,295 @@
+https://www.mongodb.com/try/download/atlascli
+https://www.mongodb.com/try/download/community
+
+1. show dbs 
+2. createCollection
+
+addint data in db
+3. insertOne
+4. insertMany
+
+
+
+show dbs
+use flipkart
+db.createCollection("orders")
+db.orders.insertMany({})
+db.orders.insertOne({})
+show collections
+
+
+{
+orderId: "ORDERID_1827623676",
+user:{
+userId:"USR123",
+name:"Rahul Sharma",
+email:"rahul@gmail.com",
+address:{
+city:"Mumabai",
+state:"Maharashtra",
+pincode: 127623
+}
+},
+products:[
+{
+productId:"PRD124",
+productName: "Dell Laptop",
+category:"Laptop",
+price: 50000,
+qty: 1
+},
+{
+productId:"PRD125",
+productName: "Sony Headphones",
+category:"Headphone",
+price: 2000,
+qty: 3
+}
+],
+payment:{
+mode: "UPI",
+status: "SUCCESS",
+txnId: "TXN2872376345"
+},
+orderStatus: "SHIPPED"
+}
+
+// queris
+
+db.orders.insertOne({
+orderId: "ORDERID_1827623676",
+user:{
+userId:"USR124",
+name:"Anjali Gupta",
+email:"anjali@gmail.com",
+address:{
+city:"Delhi",
+state:"UP",
+pincode: 827362
+}
+},
+products:[
+{
+productId:"PRD1287",
+productName: "Apple Macbook Laptop",
+category:"Laptop",
+price: 150000,
+qty: 1
+}
+],
+payment:{
+mode: "CARD",
+status: "SUCCESS",
+txnId: "TXN2872371123"
+},
+orderStatus: "TRANSIT"
+})
+
+// add multiple document
+
+db.orders.insertMany([{
+orderId: "ORDERID_18276211111",
+user:{
+userId:"USR101",
+name:"Rohit Sharma",
+email:"rohit@gmail.com",
+address:{
+city:"Mumabai",
+state:"Maharashtra",
+pincode: 126722
+}
+},
+products:[
+{
+productId:"PRD009",
+productName: "Samsung S26",
+category:"Mobile",
+price: 150000,
+qty: 1
+}
+],
+payment:{
+mode: "CARD",
+status: "PENDING",
+txnId: "TXN28723127614"
+},
+orderStatus: "SHIPPED"
+}, {
+orderId: "ORDERID_182762223",
+user:{
+userId:"USR1717",
+name:"Virat Kolhi",
+email:"virat@gmail.com",
+address:{
+city:"Delhi",
+state:"UP",
+pincode: 823762
+}
+},
+products:[
+{
+productId:"PRD8273",
+productName: "One 8",
+category:"Shoes",
+price: 10000,
+qty: 1
+}
+],
+payment:{
+mode: "UPI",
+status: "SUCCESS",
+txnId: "TXN2872372889893"
+},
+orderStatus: "DELIVERED"
+}])
+
+// reading data = find
+
+db.orders.find() // fetch all the records from collection
+db.orders.find({orderStatus:"DELIVERED"})
+db.orders.find({orderStatus: {$eq:"DELIVERED"}})
+
+db.orders.find({"payment.mode":"UPI"})
+
+db.orders.find({"products.productName":"Dell Laptop"})
+
+db.orders.find({"products":{$size: 2}})
+
+db.orders.find({"products.price":{$gt: 100000}})
+db.orders.find({"products.price":{$gt: 150000}})
+
+db.orders.find({"products.price":{$lt: 10000}})
+
+db.orders.find({"products.price":{$lte: 10000}})
+
+// mumbai + delivered
+
+db.orders.find({$and:[{"orderStatus":"DELIVERED"}, {"user.address.city": "Mumbai"}]})
+db.orders.find({$or:[{"orderStatus":"DELIVERED"}, {"user.address.city": "Mumbai"}]})
+
+db.orders.findOne({orderStatus:"COMPLETED"})
+db.orders.findMany({orderStatus:"COMPLETED"})
+
+updateOne
+
+db.orders.updateOne({orderId:"ORDERID_1827623676"}, {$set: {orderStatus: "DELIVERED"}})
+db.orders.updateOne({"products.productId":"PRD124"}, {$set: {"products.$.price": 20000}})
+db.orders.updateOne({"orderId": "ORDERID_182727627651"},  {$set:{"user.email": "anjaliGupta123@gmail.com"}})
+
+updateMany
+db.orders.updateMany({"orderStatus": "DELIVERED"}, {$set: {orderStatus: "COMPLETED"}})
+
+delete field
+db.orders.updateOne({"orderId": "ORDERID_182727627651"},  {$unset:{"user.emailId": ""}})
+
+replace => updated entire object
+db.orders.replaceOne({"orderId": "ORDERID_182727627651"},  {orderStatus: "REFUND"})
+
+deleteOne
+db.orders.deleteOne({orderId:"ORDERID_1827623676"})
+deleteMany
+db.orders.deleteMany({orderStatus:"REFUND"})
+
+projection
+
+db.orders.find({"orderId": "ORDERID_18276211111"})
+db.orders.find({"orderId": "ORDERID_18276211111"},{products:1})
+db.orders.find({"orderId": "ORDERID_18276211111"},{"user.name":1})
+db.orders.find({"orderId": "ORDERID_18276211111"},{"user.name":1, _id: 0})
+
+
+order collection
+{
+  "_id": {
+    "$oid": "6af67879a4d56690bf0870fa"
+  },
+  "orderId": "ORDERID_18276211111",
+  "user": "USR101",
+  "products": [
+   "PRD009"
+  ],
+  "payment": {
+    "mode": "CARD",
+    "status": "PENDING",
+    "txnId": "TXN28723127614"
+  },
+  "orderStatus": "COMPLETED"
+}
+
+
+
+user collection
+{
+    "userId": "USR101",
+    "name": "Rohit Sharma",
+    "email": "rohit@gmail.com",
+    "address": {
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pincode": 126722
+    }
+  }
+
+
+  products 
+
+   {
+      "productId": "PRD009",
+      "productName": "Samsung S26",
+      "category": "Mobile",
+      "price": 150000,
+      "qty": 1
+    }
+
+
+
+//
+order
+{
+  "orderId": "ORDERID_REF_101",
+  "userId": "USR1717",
+  "products": [
+    "PRD8273"
+  ],
+  "paymentId": "PAY128623",
+  "orderStatus": "COMPLETED"
+}
+
+
+user
+{
+    "userId": "USR1717",
+    "name": "Virat Kolhi",
+    "email": "virat@gmail.com",
+    "address": {
+      "city": "Delhi",
+      "state": "UP",
+      "pincode": 823762
+    }
+}
+
+{
+      "productId": "PRD8273",
+      "productName": "One 8",
+      "category": "Shoes",
+      "price": 10000,
+      "qty": 1
+}
+
+{
+    "paymentId":"PAY128623"
+    "mode": "UPI",
+    "status": "SUCCESS",
+    "txnId": "TXN2872372889893"
+}
+
+db.orders.aggregate([
+    {
+        $lookup:{
+            from:"users",
+            localField:"userId",
+            foreignField:"userId",
+            as:"userDetails"
+        }
+    }
+])
