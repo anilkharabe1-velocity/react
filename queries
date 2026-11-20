@@ -449,3 +449,16 @@ db.users.aggregate([
     }
   }
 ])
+
+
+
+INDEXING:
+
+db.users.explain('executionStats').find({"email": "signe.rasmussen@example.com"})
+db.users.createIndex("email": 1)
+
+db.users.explain('executionStats').find({"email": "signe.rasmussen@example.com"})
+
+db.users.getIndexes()
+
+db.users.dropIndex("email_1")
